@@ -6,7 +6,7 @@ from operator import itemgetter
 def hide_numbers(volue: str):
     open_number = volue.split(' ')
     if len(open_number[-1]) == 16:
-        open_number[-1] = open_number[-1][:3] + ' ' + open_number[-1][3:5] + '** **** ' + open_number[-1][12:]
+        open_number[-1] = open_number[-1][:4] + ' ' + open_number[-1][4:6] + '** **** ' + open_number[-1][12:]
     elif len(open_number[-1]) == 20:
         open_number[-1] = '**' + open_number[-1][16:]
     else:
@@ -14,8 +14,7 @@ def hide_numbers(volue: str):
     return ' '.join(open_number)
 
 
-
-def last_5_operations(data:list):
+def last_5_operations(data: list):
     data_sorted = []
 
     for item in data:
