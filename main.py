@@ -19,21 +19,22 @@ def last_5_operations(data: list):
 
     for item in data:
         if 'date' in item:
-            item['date'] = datetime.datetime.strptime(item['date'], '%Y-%m-%dT%H:%M:%S.%f')
-            data_sorted.append(item)
+            if item['state'] == 'EXECUTED':
+                item['date'] = datetime.datetime.strptime(item['date'], '%Y-%m-%dT%H:%M:%S.%f')
+                data_sorted.append(item)
 
     sorted(data_sorted, key=itemgetter('date'), reverse=True)
-
+    result = ''
     for i in range(5):
         if 'from' not in data_sorted[i]:
             data_sorted[i]['from'] = 'None'
-        print(f"\n{data_sorted[i]['date'].strftime('%d.%m.%Y')} {data_sorted[i]['description']}")
-        print(f"{hide_numbers(data_sorted[i]['from'])} -> {hide_numbers(data_sorted[i]['to'])}")
-        print(
-            f"{data_sorted[i]['operationAmount']['amount']} {data_sorted[i]['operationAmount']['currency']['name']}\n")
+        result += f"\n{data_sorted[i]['date'].strftime('%d.%m.%Y')} {data_sorted[i]['description']}\n" \
+               f"{hide_numbers(data_sorted[i]['from'])} -> {hide_numbers(data_sorted[i]['to'])}\n" \
+               f"{data_sorted[i]['operationAmount']['amount']} {data_sorted[i]['operationAmount']['currency']['name']}\n"
+    return result
 
 
 if __name__ == '__main__':
     file = open("operations.json")
     data = json.load(file)
-    last_5_operations(data)
+    print(last_5_operations(data))
